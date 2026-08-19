@@ -17,12 +17,7 @@ export function ContactSection() {
         e.preventDefault();
         setStatus("sending");
 
-        const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
-
-        if (!endpoint) {
-            setStatus("error");
-            return;
-        }
+        const endpoint = "https://formspree.io/f/meajpdaw";
 
         try {
             const res = await fetch(endpoint, {
