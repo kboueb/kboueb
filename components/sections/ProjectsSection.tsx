@@ -18,6 +18,10 @@ import {
     Briefcase,
     BookOpen,
     Anchor,
+    TrendingUp,
+    Route,
+    Languages,
+    Factory,
     ArrowRight,
     ChevronLeft,
     ChevronRight
@@ -31,20 +35,52 @@ export function ProjectsSection() {
 
     const projects = [
         {
+            title: "Neemba",
+            category: "Heavy Equipment",
+            summary: t.projects.items.neemba,
+            icon: Cog,
+            href: "https://neemba.com/",
+            gradient: "from-yellow-600/20 to-yellow-400/20",
+        },
+        {
+            title: "Neemba Cat",
+            category: "Industrial Machinery",
+            summary: t.projects.items.neembaCat,
+            icon: Cog,
+            href: "https://www.neemba-cat.com/",
+            gradient: "from-yellow-500/20 to-orange-500/20",
+        },
+        {
+            title: "Neemba SEM",
+            category: "Digital Marketing",
+            summary: t.projects.items.neembaSem,
+            icon: Cog,
+            href: "https://neemba.com/sem",
+            gradient: "from-yellow-500/20 to-yellow-300/20",
+        },
+        {
+            title: "Kirène Groupe",
+            category: "Industry",
+            summary: t.projects.items.kirene,
+            icon: Droplet,
+            href: "https://www.kirene-groupe.com/",
+            gradient: "from-sky-500/20 to-cyan-500/20",
+        },
+        {
+            title: "Orca Trend",
+            category: "Consulting",
+            summary: t.projects.items.orcatrend,
+            icon: TrendingUp,
+            href: "https://orcatrend.com/",
+            gradient: "from-teal-500/20 to-blue-500/20",
+        },
+        {
             title: "Biomérieux",
             category: "Health & Biotech",
             summary: t.projects.items.biomerieux,
             icon: TestTube,
             href: "https://www.biomerieux.com/fr/fr.html",
             gradient: "from-red-500/20 to-orange-500/20",
-        },
-        {
-            title: "PCCI Group",
-            category: "Customer Experience",
-            summary: t.projects.items.pcci,
-            icon: Headset,
-            href: "https://pcci-group.com/",
-            gradient: "from-blue-500/20 to-indigo-500/20",
         },
         {
             title: "Sup de Co",
@@ -71,14 +107,6 @@ export function ProjectsSection() {
             gradient: "from-yellow-500/20 to-amber-500/20",
         },
         {
-            title: "CAIF",
-            category: "Vocational Training",
-            summary: t.projects.items.caif,
-            icon: BookOpen,
-            href: "https://caifsn.com/",
-            gradient: "from-pink-500/20 to-rose-500/20",
-        },
-        {
             title: "Solthis",
             category: "NGO / Health",
             summary: t.projects.items.solthis,
@@ -103,20 +131,28 @@ export function ProjectsSection() {
             gradient: "from-blue-600/20 to-blue-400/20",
         },
         {
-            title: "Neemba",
-            category: "Heavy Equipment",
-            summary: t.projects.items.neemba,
-            icon: Cog,
-            href: "https://neemba.com/",
-            gradient: "from-yellow-600/20 to-yellow-400/20",
+            title: "Francophonie Instances",
+            category: "Institutions",
+            summary: t.projects.items.francophonieInstances,
+            icon: Globe,
+            href: "https://instances.francophonie.org/",
+            gradient: "from-blue-500/20 to-purple-500/20",
         },
         {
-            title: "Neemba Cat",
-            category: "Industrial Machinery",
-            summary: t.projects.items.neembaCat,
+            title: "Parlons Français",
+            category: "Education",
+            summary: t.projects.items.parlonsFrancais,
+            icon: Languages,
+            href: "https://parlonsfrancais.francophonie.org/",
+            gradient: "from-cyan-500/20 to-blue-500/20",
+        },
+        {
+            title: "Neemba SEM",
+            category: "Digital Marketing",
+            summary: t.projects.items.neembaSem,
             icon: Cog,
-            href: "https://www.neemba-cat.com/",
-            gradient: "from-yellow-500/20 to-orange-500/20",
+            href: "https://neemba.com/sem",
+            gradient: "from-yellow-500/20 to-yellow-300/20",
         },
         {
             title: "Sereno",
@@ -159,12 +195,20 @@ export function ProjectsSection() {
             gradient: "from-violet-500/20 to-purple-500/20",
         },
         {
-            title: "Kirène Groupe",
+            title: "Roadvision Infra",
+            category: "Infrastructure",
+            summary: t.projects.items.roadvision,
+            icon: Route,
+            href: "https://roadvision-infra.com/",
+            gradient: "from-orange-600/20 to-amber-500/20",
+        },
+        {
+            title: "Sogabel",
             category: "Industry",
-            summary: t.projects.items.kirene,
-            icon: Droplet,
-            href: "https://www.kirene-groupe.com/",
-            gradient: "from-sky-500/20 to-cyan-500/20",
+            summary: t.projects.items.sogabel,
+            icon: Factory,
+            href: "https://www.sogabel.com/",
+            gradient: "from-red-600/20 to-orange-500/20",
         },
     ];
 
@@ -223,6 +267,7 @@ export function ProjectsSection() {
                     >
                         {projects.map((project, index) => {
                             const Icon = project.icon;
+                            const screenshot = `https://image.thum.io/get/maxage/365/width/800/noanimate/${project.href}`;
                             return (
                                 <motion.a
                                     key={index}
@@ -233,12 +278,24 @@ export function ProjectsSection() {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ delay: index * 0.1 }}
                                     viewport={{ once: true }}
-                                    className="snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[350px] relative group overflow-hidden rounded-3xl border border-white/10 bg-neutral-900 overflow-hidden hover:border-white/30 transition-all"
+                                    className="snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[350px] relative group overflow-hidden rounded-3xl border border-white/10 bg-neutral-900 hover:border-white/30 transition-all"
                                 >
                                     {/* Background Gradient */}
                                     <div
                                         className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-500`}
                                     />
+
+                                    {/* Website Screenshot */}
+                                    <img
+                                        src={screenshot}
+                                        alt={`Screenshot of ${project.title}`}
+                                        loading="lazy"
+                                        onError={(e) => (e.currentTarget.style.display = "none")}
+                                        className="absolute inset-0 w-full h-full object-cover object-top opacity-60 group-hover:opacity-90 scale-105 group-hover:scale-100 transition-all duration-700"
+                                    />
+
+                                    {/* Readability Fade */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20" />
 
                                     <div className="absolute inset-0 p-8 flex flex-col justify-between z-10">
                                         <div className="flex justify-between items-start">
