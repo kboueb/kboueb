@@ -91,6 +91,9 @@ export const translations = {
                 email: "Email",
                 message: "Message",
                 send: "Send Message",
+                sending: "Sending...",
+                success: "Message sent successfully!",
+                error: "Failed to send. Please try again.",
             },
         },
         skills: {
@@ -197,6 +200,9 @@ export const translations = {
                 email: "Email",
                 message: "Message",
                 send: "Envoyer le message",
+                sending: "Envoi en cours...",
+                success: "Message envoyé avec succès !",
+                error: "Échec de l'envoi. Veuillez réessayer.",
             },
         },
         skills: {

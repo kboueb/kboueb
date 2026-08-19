@@ -2,10 +2,56 @@
 
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Phone, Send } from "lucide-react";
+import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function ContactSection() {
     const { t } = useLanguage();
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+    const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus("sending");
+
+        const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
+        if (!endpoint) {
+            setStatus("error");
+            return;
+        }
+
+        try {
+            const res = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    message,
+                    _subject: `Contact portfolio - ${name}`,
+                    _replyto: email,
+                }),
+            });
+
+            if (res.ok) {
+                setStatus("success");
+                setName("");
+                setEmail("");
+                setMessage("");
+            } else {
+                setStatus("error");
+            }
+        } catch {
+            setStatus("error");
+        }
+    };
 
     return (
         <section className="py-20 bg-neutral-50 dark:bg-neutral-950 text-gray-900 dark:text-white" id="contact">
@@ -71,11 +117,14 @@ export function ContactSection() {
                         </div>
 
                         {/* Form */}
-                        <form className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                                 <input
                                     type="text"
                                     placeholder={t.contact.form.name}
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
                                     className="w-full bg-white border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-all placeholder:text-gray-400 dark:bg-black/50 dark:border-white/10"
                                 />
                             </div>
@@ -83,6 +132,9 @@ export function ContactSection() {
                                 <input
                                     type="email"
                                     placeholder={t.contact.form.email}
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
                                     className="w-full bg-white border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-all placeholder:text-gray-400 dark:bg-black/50 dark:border-white/10"
                                 />
                             </div>
@@ -90,16 +142,31 @@ export function ContactSection() {
                                 <textarea
                                     placeholder={t.contact.form.message}
                                     rows={4}
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    required
                                     className="w-full bg-white border border-black/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition-all placeholder:text-gray-400 resize-none dark:bg-black/50 dark:border-white/10"
                                 />
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                                disabled={status === "sending"}
+                                className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
                             >
-                                {t.contact.form.send}
+                                {status === "sending" ? t.contact.form.sending : t.contact.form.send}
                                 <Send className="w-4 h-4" />
                             </button>
+
+                            {status === "success" && (
+                                <p className="text-sm text-green-500 font-medium text-center">
+                                    {t.contact.form.success}
+                                </p>
+                            )}
+                            {status === "error" && (
+                                <p className="text-sm text-red-500 font-medium text-center">
+                                    {t.contact.form.error}
+                                </p>
+                            )}
                         </form>
                     </div>
                 </motion.div>
