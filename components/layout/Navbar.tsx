@@ -4,6 +4,8 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Menu, X } from "lucide-react";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function Navbar() {
     const { t } = useLanguage();
@@ -58,8 +60,13 @@ export function Navbar() {
                 }}
                 animate={isHidden ? "hidden" : "visible"}
                 transition={{ duration: 0.35, ease: "easeInOut" }}
-                className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? "bg-black/50 backdrop-blur-lg border-b border-white/5 py-4" : "bg-transparent py-6"
-                    }`}
+                className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+                    isMobileMenuOpen
+                        ? "bg-white/95 backdrop-blur-lg border-b border-black/5"
+                        : isScrolled
+                        ? "bg-white/70 backdrop-blur-lg border-b border-black/10 py-4 dark:bg-black/50 dark:border-white/5"
+                        : "bg-transparent py-6"
+                }`}
             >
                 <div className="container mx-auto px-6 flex items-center justify-between">
                     {/* Logo */}
@@ -68,31 +75,37 @@ export function Navbar() {
                         onClick={(e) => handleScroll(e, "#hero")}
                         className="text-2xl font-bold tracking-tighter"
                     >
-                        <span className="text-white">k</span>
+                        <span className={isMobileMenuOpen ? "text-gray-900" : "text-gray-900 dark:text-white"}>k</span>
                         <span className="text-indigo-400">boueb</span>
                     </a>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex gap-8">
+                    <div className="hidden md:flex items-center gap-8">
                         {links.map((link) => (
                             <a
                                 key={link.name}
                                 href={link.href}
                                 onClick={(e) => handleScroll(e, link.href)}
-                                className="text-sm font-medium text-gray-400 hover:text-white transition-colors"
+                                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:text-white"
                             >
                                 {link.name}
                             </a>
                         ))}
+                        <ThemeToggle />
+                        <LanguageSwitcher />
                     </div>
 
-                    {/* Mobile Toggle */}
-                    <button
-                        className="md:hidden text-white"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    >
-                        {isMobileMenuOpen ? <X /> : <Menu />}
-                    </button>
+                    {/* Mobile: Switcher + Toggle */}
+                    <div className="flex items-center gap-3 md:hidden">
+                        <ThemeToggle />
+                        <LanguageSwitcher />
+                        <button
+                            className={isMobileMenuOpen ? "text-gray-900" : "text-gray-900 dark:text-white"}
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        >
+                            {isMobileMenuOpen ? <X /> : <Menu />}
+                        </button>
+                    </div>
                 </div>
             </motion.nav>
 
@@ -102,7 +115,7 @@ export function Navbar() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    className="fixed inset-0 z-30 bg-black/95 pt-24 px-6 md:hidden"
+                    className="fixed inset-0 z-30 bg-white/95 backdrop-blur-lg pt-24 px-6 md:hidden"
                 >
                     <div className="flex flex-col gap-6 text-center">
                         {links.map((link) => (
@@ -110,7 +123,7 @@ export function Navbar() {
                                 key={link.name}
                                 href={link.href}
                                 onClick={(e) => handleScroll(e, link.href)}
-                                className="text-2xl font-bold text-gray-300 hover:text-white"
+                                className="text-2xl font-bold text-gray-700 hover:text-indigo-500 transition-colors"
                             >
                                 {link.name}
                             </a>

@@ -6,9 +6,9 @@ import {
     Database,
     Server,
     Layout,
-    Bot,
-    KanbanSquare,
-    Boxes
+    Globe,
+    Wrench,
+    ClipboardCheck
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -17,63 +17,72 @@ export function SkillsSection() {
 
     const skillCategories = [
         {
-            id: "frontend",
-            title: t.skills.categories.frontend,
-            icon: Layout,
-            skills: ["React.js", "WordPress", "Next.js", "Tailwind CSS"],
-            color: "text-blue-400",
-            bg: "bg-blue-500/10",
-            border: "border-blue-500/20"
-        },
-        {
-            id: "backend",
-            title: t.skills.categories.backend,
-            icon: Server,
-            skills: ["Laravel", "WordPress", "Drupal"],
+            id: "languages",
+            title: t.skills.categories.languages,
+            icon: Code2,
+            skills: ["HTML5", "CSS3", "JavaScript", "PHP", "SQL", "Python"],
             color: "text-red-400",
             bg: "bg-red-500/10",
             border: "border-red-500/20"
         },
         {
-            id: "database",
-            title: t.skills.categories.database,
-            icon: Database,
-            skills: ["SQL", "PostgreSQL", "MySQL"],
-            color: "text-yellow-400",
-            bg: "bg-yellow-500/10",
-            border: "border-yellow-500/20"
+            id: "frameworks",
+            title: t.skills.categories.frameworks,
+            icon: Server,
+            skills: ["Laravel", "React.js", "Django"],
+            color: "text-blue-400",
+            bg: "bg-blue-500/10",
+            border: "border-blue-500/20"
         },
         {
-            id: "devops",
-            title: t.skills.categories.devops,
-            icon: Boxes,
-            skills: ["Docker", "Microservices", "GitHub Actions"],
-            color: "text-cyan-400",
-            bg: "bg-cyan-500/10",
-            border: "border-cyan-500/20"
-        },
-        {
-            id: "management",
-            title: t.skills.categories.management,
-            icon: KanbanSquare,
-            skills: ["Scrum", "Kanban"],
+            id: "cms",
+            title: t.skills.categories.cms,
+            icon: Layout,
+            skills: ["WordPress", "Drupal"],
             color: "text-purple-400",
             bg: "bg-purple-500/10",
             border: "border-purple-500/20"
         },
         {
-            id: "chatbot",
-            title: t.skills.categories.chatbot,
-            icon: Bot,
-            skills: ["Flask", "Google Apps Scripts", "n8n"],
+            id: "databases",
+            title: t.skills.categories.databases,
+            icon: Database,
+            skills: ["MySQL", "PostgreSQL", "MongoDB"],
+            color: "text-yellow-400",
+            bg: "bg-yellow-500/10",
+            border: "border-yellow-500/20"
+        },
+        {
+            id: "api",
+            title: t.skills.categories.api,
+            icon: Globe,
+            skills: ["API REST", "JSON", "Paiement", "Emailing", "Analytics"],
+            color: "text-cyan-400",
+            bg: "bg-cyan-500/10",
+            border: "border-cyan-500/20"
+        },
+        {
+            id: "tools",
+            title: t.skills.categories.tools,
+            icon: Wrench,
+            skills: ["Git", "GitHub", "Bitbucket", "Docker", "Linux/Ubuntu", "Monitoring"],
             color: "text-green-400",
             bg: "bg-green-500/10",
             border: "border-green-500/20"
         },
+        {
+            id: "methods",
+            title: t.skills.categories.methods,
+            icon: ClipboardCheck,
+            skills: ["Agile", "Coordination d'équipe", "Reporting", "Documentation"],
+            color: "text-pink-400",
+            bg: "bg-pink-500/10",
+            border: "border-pink-500/20"
+        },
     ];
 
     return (
-        <section className="py-20 bg-neutral-950 text-white" id="skills">
+        <section className="py-20 bg-neutral-50 dark:bg-neutral-950 text-gray-900 dark:text-white" id="skills">
             <div className="container mx-auto px-4">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
@@ -97,7 +106,7 @@ export function SkillsSection() {
                                 className={`p-6 rounded-3xl border ${category.border} ${category.bg} backdrop-blur-sm hover:bg-opacity-20 transition-all`}
                             >
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className={`p-3 rounded-xl bg-black/40 ${category.color}`}>
+                                    <div className={`p-3 rounded-xl bg-white/70 dark:bg-black/40 ${category.color}`}>
                                         <Icon className="w-6 h-6" />
                                     </div>
                                     <h3 className="text-xl font-bold">{category.title}</h3>
@@ -107,7 +116,7 @@ export function SkillsSection() {
                                     {category.skills.map((skill, idx) => (
                                         <span
                                             key={idx}
-                                            className="px-3 py-1.5 rounded-lg bg-black/40 border border-white/5 text-sm text-gray-300 hover:text-white hover:border-white/20 transition-colors"
+                                            className="px-3 py-1.5 rounded-lg bg-white/70 border border-black/10 text-sm text-gray-600 hover:text-gray-900 hover:border-gray-900/30 transition-colors dark:bg-black/40 dark:border-white/5 dark:text-gray-300 dark:hover:text-white dark:hover:border-white/20"
                                         >
                                             {skill}
                                         </span>

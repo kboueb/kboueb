@@ -225,7 +225,7 @@ export function ProjectsSection() {
     };
 
     return (
-        <section className="py-20 bg-black text-white" id="projects">
+        <section className="py-20 bg-neutral-50 dark:bg-black text-gray-900 dark:text-white" id="projects">
             <div className="container mx-auto px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -245,7 +245,7 @@ export function ProjectsSection() {
                     {/* Navigation Buttons */}
                     <button
                         onClick={scrollLeft}
-                        className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 hover:bg-white text-white hover:text-black rounded-full flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100 disabled:opacity-0"
+                        className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-900/10 hover:bg-gray-900 text-gray-900 hover:text-white dark:bg-white/10 dark:hover:bg-white dark:text-white dark:hover:text-black rounded-full flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100 disabled:opacity-0"
                         aria-label="Previous project"
                     >
                         <ChevronLeft className="w-6 h-6" />
@@ -253,7 +253,7 @@ export function ProjectsSection() {
 
                     <button
                         onClick={scrollRight}
-                        className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 hover:bg-white text-white hover:text-black rounded-full flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100"
+                        className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-900/10 hover:bg-gray-900 text-gray-900 hover:text-white dark:bg-white/10 dark:hover:bg-white dark:text-white dark:hover:text-black rounded-full flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100"
                         aria-label="Next project"
                     >
                         <ChevronRight className="w-6 h-6" />

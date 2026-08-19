@@ -21,7 +21,7 @@ const technologies = [
 
 export function TechStack() {
     return (
-        <section className="py-10 bg-black overflow-hidden border-y border-white/5">
+        <section className="py-10 bg-neutral-50 dark:bg-black overflow-hidden border-y border-black/5 dark:border-white/5">
             <div className="flex relative">
                 <motion.div
                     className="flex gap-12 whitespace-nowrap"
@@ -35,7 +35,7 @@ export function TechStack() {
                     {[...technologies, ...technologies].map((tech, index) => (
                         <div
                             key={index}
-                            className="text-2xl md:text-4xl font-bold text-neutral-800 hover:text-white transition-colors cursor-default uppercase tracking-widest"
+                            className="text-2xl md:text-4xl font-bold text-neutral-300 hover:text-gray-900 dark:text-neutral-800 dark:hover:text-white transition-colors cursor-default uppercase tracking-widest"
                         >
                             {tech}
                         </div>

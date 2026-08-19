@@ -45,7 +45,7 @@ export function HeroSection() {
     }, [displayText, isDeleting, textIndex, texts]);
 
     return (
-        <section id="hero" className="relative h-screen w-full overflow-hidden bg-black flex flex-col items-center justify-center text-white">
+        <section id="hero" className="relative h-screen w-full overflow-hidden bg-white dark:bg-black flex flex-col items-center justify-center text-gray-900 dark:text-white">
             {/* Background Effects */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[120px] animate-pulse" />
@@ -63,7 +63,7 @@ export function HeroSection() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h1 className="text-4xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70 mb-4">
+                    <h1 className="text-4xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-600 dark:from-white dark:to-white/70 mb-4">
                         {t.hero.greeting} <span className="text-indigo-400">Kani Bouebassihou</span>
                     </h1>
                 </motion.div>
@@ -72,7 +72,7 @@ export function HeroSection() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5, duration: 0.8 }}
-                    className="text-xl md:text-3xl text-gray-400 font-mono h-[40px] flex items-center gap-2"
+                    className="text-xl md:text-3xl text-gray-500 dark:text-gray-400 font-mono h-[40px] flex items-center gap-2"
                 >
                     <span>&gt;</span>
                     <span>{displayText}</span>
@@ -87,14 +87,14 @@ export function HeroSection() {
                 >
                     <button
                         onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="px-8 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all flex items-center gap-2 group"
+                        className="px-8 py-3 rounded-full bg-gray-900 text-white dark:bg-white dark:text-black font-semibold hover:bg-gray-700 dark:hover:bg-gray-200 transition-all flex items-center gap-2 group"
                     >
                         {t.hero.ctaProject}
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>
                     <button
                         onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="px-8 py-3 rounded-full border border-white/20 text-white font-semibold hover:bg-white/10 transition-all flex items-center gap-2 backdrop-blur-sm"
+                        className="px-8 py-3 rounded-full border border-gray-900/20 text-gray-900 dark:border-white/20 dark:text-white font-semibold hover:bg-gray-900/10 dark:hover:bg-white/10 transition-all flex items-center gap-2 backdrop-blur-sm"
                     >
                         {t.hero.ctaContact}
                         <Mail className="w-4 h-4" />
