@@ -12,7 +12,7 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-    const [language, setLanguage] = useState<Language>("fr"); // Default to FR as requested or EN? User asked for bilingual version so FR default implies primary audience.
+    const [language, setLanguage] = useState<Language>("en");
     // Actually user request: "Le portfolio doit etre bilingue donc prévoir une version fr". 
     // Maybe default to browser detection or EN? Let's default to 'en' for international appeal but can be switched. 
     // Wait, user said "previor une version fr". Let's default to EN but make FR easy. 

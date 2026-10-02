@@ -1,331 +1,349 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-    Building2,
-    Car,
-    Cog,
-    Droplet,
-    FileSpreadsheet,
-    Globe,
-    GraduationCap,
-    Headset,
-    Heart,
-    Home,
-    Leaf,
-    TestTube,
-    Utensils,
-    Briefcase,
-    BookOpen,
-    Anchor,
-    TrendingUp,
-    Route,
-    Languages,
-    Factory,
-    ArrowRight,
-    ChevronLeft,
-    ChevronRight
-} from "lucide-react";
-import { useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ArrowUpRight, Search, LayoutGrid, List } from "lucide-react";
+import { useState, type MouseEvent } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { PROJECTS, SECTOR_OF, SECTOR_KEYS } from "@/lib/projects";
+import { useTransitionNav } from "@/components/ui/Transition";
 
 export function ProjectsSection() {
-    const { t, language } = useLanguage();
-    const carouselRef = useRef<HTMLDivElement>(null);
+    const { t } = useLanguage();
+    const { navigate } = useTransitionNav();
+    const [hovered, setHovered] = useState<number | null>(null);
+    const [view, setView] = useState<"index" | "grid">("index");
+    const [sector, setSector] = useState<string>("all");
+    const [query, setQuery] = useState("");
 
-    const projects = [
-        {
-            title: "Neemba",
-            category: "Heavy Equipment",
-            summary: t.projects.items.neemba,
-            icon: Cog,
-            href: "https://neemba.com/",
-            gradient: "from-yellow-600/20 to-yellow-400/20",
-        },
-        {
-            title: "Neemba Cat",
-            category: "Industrial Machinery",
-            summary: t.projects.items.neembaCat,
-            icon: Cog,
-            href: "https://www.neemba-cat.com/",
-            gradient: "from-yellow-500/20 to-orange-500/20",
-        },
-        {
-            title: "Neemba SEM",
-            category: "Digital Marketing",
-            summary: t.projects.items.neembaSem,
-            icon: Cog,
-            href: "https://neemba.com/sem",
-            gradient: "from-yellow-500/20 to-yellow-300/20",
-        },
-        {
-            title: "Kirène Groupe",
-            category: "Industry",
-            summary: t.projects.items.kirene,
-            icon: Droplet,
-            href: "https://www.kirene-groupe.com/",
-            gradient: "from-sky-500/20 to-cyan-500/20",
-        },
-        {
-            title: "Orca Trend",
-            category: "Consulting",
-            summary: t.projects.items.orcatrend,
-            icon: TrendingUp,
-            href: "https://orcatrend.com/",
-            gradient: "from-teal-500/20 to-blue-500/20",
-        },
-        {
-            title: "Biomérieux",
-            category: "Health & Biotech",
-            summary: t.projects.items.biomerieux,
-            icon: TestTube,
-            href: "https://www.biomerieux.com/fr/fr.html",
-            gradient: "from-red-500/20 to-orange-500/20",
-        },
-        {
-            title: "Sup de Co",
-            category: "Education",
-            summary: t.projects.items.supdeco,
-            icon: GraduationCap,
-            href: "https://supdeco.sn/",
-            gradient: "from-green-500/20 to-emerald-500/20",
-        },
-        {
-            title: "Pacific et General",
-            category: "Corporate",
-            summary: t.projects.items.pacific,
-            icon: Building2,
-            href: "https://www.pacificetgeneral.com/",
-            gradient: "from-slate-500/20 to-gray-500/20",
-        },
-        {
-            title: "Occasions Autorent",
-            category: "Automotive",
-            summary: t.projects.items.autorent,
-            icon: Car,
-            href: "https://occasions.autorent.sn/",
-            gradient: "from-yellow-500/20 to-amber-500/20",
-        },
-        {
-            title: "Solthis",
-            category: "NGO / Health",
-            summary: t.projects.items.solthis,
-            icon: Heart,
-            href: "https://solthis.org/fr/",
-            gradient: "from-teal-500/20 to-cyan-500/20",
-        },
-        {
-            title: "Mandarine",
-            category: "Services",
-            summary: t.projects.items.mandarine,
-            icon: Utensils,
-            href: "https://www.mandarine-sn.com/",
-            gradient: "from-orange-500/20 to-red-500/20",
-        },
-        {
-            title: "French-African Foundation",
-            category: "Foundation",
-            summary: t.projects.items.frenchAfrican,
-            icon: Globe,
-            href: "https://french-african.org/",
-            gradient: "from-blue-600/20 to-blue-400/20",
-        },
-        {
-            title: "Francophonie Instances",
-            category: "Institutions",
-            summary: t.projects.items.francophonieInstances,
-            icon: Globe,
-            href: "https://instances.francophonie.org/",
-            gradient: "from-blue-500/20 to-purple-500/20",
-        },
-        {
-            title: "Parlons Français",
-            category: "Education",
-            summary: t.projects.items.parlonsFrancais,
-            icon: Languages,
-            href: "https://parlonsfrancais.francophonie.org/",
-            gradient: "from-cyan-500/20 to-blue-500/20",
-        },
-        {
-            title: "Neemba SEM",
-            category: "Digital Marketing",
-            summary: t.projects.items.neembaSem,
-            icon: Cog,
-            href: "https://neemba.com/sem",
-            gradient: "from-yellow-500/20 to-yellow-300/20",
-        },
-        {
-            title: "Sereno",
-            category: "Real Estate",
-            summary: t.projects.items.sereno,
-            icon: Home,
-            href: "https://sereno.sn/",
-            gradient: "from-purple-500/20 to-indigo-500/20",
-        },
-        {
-            title: "Cabex",
-            category: "Audit & Consulting",
-            summary: t.projects.items.cabex,
-            icon: FileSpreadsheet,
-            href: "https://cabex.sn/",
-            gradient: "from-emerald-500/20 to-green-500/20",
-        },
-        {
-            title: "Varamada",
-            category: "Agro-Industry",
-            summary: t.projects.items.varamada,
-            icon: Leaf,
-            href: "https://varamada.mg/",
-            gradient: "from-green-600/20 to-lime-500/20",
-        },
-        {
-            title: "Port Sec",
-            category: "Logistics",
-            summary: t.projects.items.portSec,
-            icon: Anchor,
-            href: "https://port-sec.com/",
-            gradient: "from-blue-800/20 to-blue-600/20",
-        },
-        {
-            title: "A2MP",
-            category: "Management",
-            summary: t.projects.items.a2mp,
-            icon: Briefcase,
-            href: "https://a2mp.com/fr/accueil/",
-            gradient: "from-violet-500/20 to-purple-500/20",
-        },
-        {
-            title: "Roadvision Infra",
-            category: "Infrastructure",
-            summary: t.projects.items.roadvision,
-            icon: Route,
-            href: "https://roadvision-infra.com/",
-            gradient: "from-orange-600/20 to-amber-500/20",
-        },
-        {
-            title: "Sogabel",
-            category: "Industry",
-            summary: t.projects.items.sogabel,
-            icon: Factory,
-            href: "https://www.sogabel.com/",
-            gradient: "from-red-600/20 to-orange-500/20",
-        },
-    ];
+    const projects = PROJECTS.map((m) => ({ ...m, summary: t.projects.items[m.itemKey] }));
 
-    const scrollLeft = () => {
-        if (carouselRef.current) {
-            carouselRef.current.scrollBy({ left: -400, behavior: "smooth" });
-        }
+    const q = query.trim().toLowerCase();
+    const filtered = projects.filter(
+        (p) =>
+            (sector === "all" || SECTOR_OF[p.category] === sector) &&
+            (q === "" || `${p.title} ${p.category} ${p.summary}`.toLowerCase().includes(q))
+    );
+
+    // Floating cursor preview (lerped)
+    const px = useMotionValue(0);
+    const py = useMotionValue(0);
+    const spx = useSpring(px, { stiffness: 160, damping: 22 });
+    const spy = useSpring(py, { stiffness: 160, damping: 22 });
+    const pvx = useTransform(spx, (v) => v - 160);
+    const pvy = useTransform(spy, (v) => v - 120);
+
+    const onListMove = (e: MouseEvent) => {
+        px.set(e.clientX);
+        py.set(e.clientY);
     };
 
-    const scrollRight = () => {
-        if (carouselRef.current) {
-            carouselRef.current.scrollBy({ left: 400, behavior: "smooth" });
-        }
+    const clearFilters = () => {
+        setSector("all");
+        setQuery("");
+        setHovered(null);
+    };
+
+    const goDetail = (e: MouseEvent<HTMLAnchorElement>, slug: string) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+        e.preventDefault();
+        navigate(`/work/${slug}`);
     };
 
     return (
-        <section className="py-20 bg-neutral-50 dark:bg-black text-gray-900 dark:text-white" id="projects">
-            <div className="container mx-auto px-4">
+        <section className="relative py-24 md:py-36 overflow-hidden bg-paper dark:bg-ink text-ink dark:text-paper" id="projects">
+            <div className="absolute top-20 left-1/3 w-[320px] h-[320px] bg-signal/10 rounded-full blur-[130px]" />
+
+            <div className="container mx-auto px-6 md:px-10 relative">
+                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className="text-center mb-12"
+                    viewport={{ once: true }}
+                    className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4">
-                        {t.projects.title} <span className="text-indigo-400">{t.projects.subtitle}</span>
-                    </h2>
-                    <p className="text-gray-500 flex items-center justify-center gap-2">
-                        {t.projects.scrollHelper}
-                        <ArrowRight className="w-4 h-4 animate-bounce-x" />
+                    <div>
+                        <p className="flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-signal mb-4">
+                            <span className="inline-block w-8 h-px bg-signal" /> 03 — {t.projects.title}
+                        </p>
+                        <h2 className="font-display font-bold text-4xl md:text-6xl tracking-tight leading-none">
+                            {t.projects.heading.split(" ")[0]}
+                            <span className="text-signal font-accent italic font-normal"> {t.projects.heading.split(" ").slice(1).join(" ")}</span>
+                        </h2>
+                    </div>
+                    <p className="md:max-w-xs text-sm text-fog flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-signal" />
+                        {t.projects.hint}
                     </p>
                 </motion.div>
 
-                <div className="relative group/carousel">
-                    {/* Navigation Buttons */}
-                    <button
-                        onClick={scrollLeft}
-                        className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-900/10 hover:bg-gray-900 text-gray-900 hover:text-white dark:bg-white/10 dark:hover:bg-white dark:text-white dark:hover:text-black rounded-full flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100 disabled:opacity-0"
-                        aria-label="Previous project"
-                    >
-                        <ChevronLeft className="w-6 h-6" />
-                    </button>
+                {/* Controls: view toggle · live count · search · sectors */}
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="mb-10 flex flex-col gap-4"
+                >
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:justify-between">
+                        <div className="flex items-center gap-4">
+                            {/* Index ⇄ Grid toggle */}
+                            <div className="flex rounded-full border border-black/15 dark:border-white/15 p-1">
+                                {(
+                                    [
+                                        { key: "index", label: t.projects.viewIndex, icon: List },
+                                        { key: "grid", label: t.projects.viewGrid, icon: LayoutGrid },
+                                    ] as const
+                                ).map((opt) => (
+                                    <button
+                                        key={opt.key}
+                                        onClick={() => {
+                                            setView(opt.key);
+                                            setHovered(null);
+                                        }}
+                                        className={`relative flex items-center gap-2 rounded-full px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] transition-colors ${
+                                            view === opt.key
+                                                ? "text-paper dark:text-ink"
+                                                : "text-ink/50 hover:text-ink dark:text-paper/50 dark:hover:text-paper"
+                                        }`}
+                                    >
+                                        {view === opt.key && (
+                                            <motion.span
+                                                layoutId="view-toggle"
+                                                transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                                                className="absolute inset-0 rounded-full bg-ink dark:bg-paper"
+                                            />
+                                        )}
+                                        <opt.icon className="relative z-10 w-3.5 h-3.5" />
+                                        <span className="relative z-10">{opt.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                            {/* Live count */}
+                            <p className="font-mono text-xs text-fog tabular-nums">
+                                <span className="text-signal">{String(filtered.length).padStart(2, "0")}</span>
+                                {" / "}
+                                {String(projects.length).padStart(2, "0")} {t.projects.count}
+                            </p>
+                        </div>
 
-                    <button
-                        onClick={scrollRight}
-                        className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gray-900/10 hover:bg-gray-900 text-gray-900 hover:text-white dark:bg-white/10 dark:hover:bg-white dark:text-white dark:hover:text-black rounded-full flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover/carousel:opacity-100"
-                        aria-label="Next project"
-                    >
-                        <ChevronRight className="w-6 h-6" />
-                    </button>
+                        {/* Search */}
+                        <label className="flex items-center gap-2.5 rounded-full border border-black/15 dark:border-white/15 bg-white/60 dark:bg-smoke px-4 py-2.5 focus-within:border-signal/60 transition-colors sm:w-64">
+                            <Search className="w-4 h-4 text-fog shrink-0" />
+                            <input
+                                value={query}
+                                onChange={(e) => {
+                                    setQuery(e.target.value);
+                                    setHovered(null);
+                                }}
+                                placeholder={t.projects.search}
+                                className="w-full bg-transparent font-mono text-xs text-ink dark:text-paper placeholder:text-fog focus:outline-none"
+                            />
+                        </label>
+                    </div>
 
-                    {/* Carousel Container */}
-                    <div
-                        ref={carouselRef}
-                        className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-8 scrollbar-hide px-4"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                    >
-                        {projects.map((project, index) => {
+                    {/* Sector pills */}
+                    <div className="flex flex-wrap items-center gap-2">
+                        <button
+                            onClick={() => {
+                                setSector("all");
+                                setHovered(null);
+                            }}
+                            className={`rounded-full px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] transition-all ${
+                                sector === "all"
+                                    ? "bg-ink text-paper dark:bg-paper dark:text-ink"
+                                    : "border border-black/15 dark:border-white/15 text-ink/60 dark:text-paper/60 hover:border-signal hover:text-signal"
+                            }`}
+                        >
+                            {t.projects.all}
+                        </button>
+                        {SECTOR_KEYS.map((key) => (
+                            <button
+                                key={key}
+                                onClick={() => {
+                                    setSector(key);
+                                    setHovered(null);
+                                }}
+                                className={`rounded-full px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] transition-all ${
+                                    sector === key
+                                        ? "bg-ink text-paper dark:bg-paper dark:text-ink"
+                                        : "border border-black/15 dark:border-white/15 text-ink/60 dark:text-paper/60 hover:border-signal hover:text-signal"
+                                }`}
+                            >
+                                {t.projects.sectors[key]}
+                            </button>
+                        ))}
+                        {(sector !== "all" || query.trim() !== "") && (
+                            <button
+                                onClick={clearFilters}
+                                className="rounded-full px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-signal hover:underline underline-offset-4"
+                            >
+                                {t.projects.clear}
+                            </button>
+                        )}
+                    </div>
+                </motion.div>
+
+                {/* Index view */}
+                {view === "index" && (
+                    <div onMouseMove={onListMove} onMouseLeave={() => setHovered(null)}>
+                        {filtered.map((project, index) => {
                             const Icon = project.icon;
-                            const screenshot = `https://image.thum.io/get/maxage/365/width/800/noanimate/${project.href}`;
+                            const isActive = index === hovered;
                             return (
                                 <motion.a
-                                    key={index}
-                                    href={project.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: index * 0.1 }}
+                                    key={project.slug}
+                                    href={`/work/${project.slug}`}
+                                    onClick={(e) => goDetail(e, project.slug)}
+                                    initial={{ opacity: 0, y: 24 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    className="snap-center flex-shrink-0 w-[85vw] md:w-[600px] h-[350px] relative group overflow-hidden rounded-3xl border border-white/10 bg-neutral-900 hover:border-white/30 transition-all"
+                                    transition={{ delay: Math.min(index, 8) * 0.04, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                                    onMouseEnter={() => setHovered(index)}
+                                    onFocus={() => setHovered(index)}
+                                    className="group relative flex items-center gap-5 md:gap-8 py-5 md:py-6 border-b border-black/10 dark:border-white/10 cursor-pointer"
                                 >
-                                    {/* Background Gradient */}
+                                    {/* Hover wash */}
                                     <div
-                                        className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-500`}
+                                        className={`absolute inset-0 -z-10 rounded-2xl bg-gradient-to-r from-signal/[0.07] to-transparent transition-opacity duration-500 ${
+                                            isActive ? "opacity-100" : "opacity-0"
+                                        }`}
                                     />
 
-                                    {/* Website Screenshot */}
-                                    <img
-                                        src={screenshot}
-                                        alt={`Screenshot of ${project.title}`}
-                                        loading="lazy"
-                                        onError={(e) => (e.currentTarget.style.display = "none")}
-                                        className="absolute inset-0 w-full h-full object-cover object-top opacity-60 group-hover:opacity-90 scale-105 group-hover:scale-100 transition-all duration-700"
-                                    />
+                                    <span
+                                        className={`shrink-0 font-mono text-sm tabular-nums transition-colors duration-300 ${
+                                            isActive ? "text-signal" : "text-neutral-400 dark:text-neutral-600"
+                                        }`}
+                                    >
+                                        {String(index + 1).padStart(2, "0")}
+                                    </span>
 
-                                    {/* Readability Fade */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20" />
-
-                                    <div className="absolute inset-0 p-8 flex flex-col justify-between z-10">
-                                        <div className="flex justify-between items-start">
-                                            <div className="p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/5">
-                                                <Icon className="w-8 h-8 text-indigo-400 group-hover:text-white transition-colors" />
-                                            </div>
-                                            <div className="flex items-center gap-2 text-sm font-semibold text-white/50 group-hover:text-white transition-colors">
-                                                {t.projects.visit} <ArrowRight className="w-4 h-4" />
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <p className="text-indigo-400 text-sm font-mono mb-2 uppercase tracking-wider">
+                                    <div className="flex-1 min-w-0">
+                                        <h3
+                                            className={`font-display font-semibold text-2xl md:text-4xl leading-tight transition-all duration-300 md:group-hover:translate-x-2 ${
+                                                isActive ? "text-signal" : ""
+                                            }`}
+                                        >
+                                            {project.title}
+                                        </h3>
+                                        <div className="mt-1.5 flex items-center gap-3">
+                                            <p className="text-xs font-mono uppercase tracking-wider text-fog">
                                                 {project.category}
                                             </p>
-                                            <h3 className="text-3xl font-bold mb-3 group-hover:text-white transition-colors">{project.title}</h3>
-                                            <p className="text-gray-400 group-hover:text-gray-200 transition-colors line-clamp-2">
+                                            <span className="hidden sm:inline-block w-1 h-1 rounded-full bg-neutral-300 dark:bg-neutral-700" />
+                                            <p className="hidden sm:block text-xs text-neutral-400 dark:text-neutral-500 truncate">
                                                 {project.summary}
                                             </p>
                                         </div>
                                     </div>
 
-                                    {/* Hover Glow */}
-                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                                        <div className="absolute -inset-full top-0 block h-[500%] w-1/2 -rotate-45 bg-gradient-to-r from-transparent to-white/5 opacity-40 blur-2xl group-hover:animate-shine" />
+                                    <span className="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-black/15 dark:border-white/15 flex items-center justify-center text-ink dark:text-paper transition-all duration-300 group-hover:bg-signal group-hover:text-white group-hover:border-signal group-hover:rotate-45">
+                                        <ArrowUpRight className="w-4 h-4" />
+                                    </span>
+
+                                    <div className="hidden md:block w-9 h-9 rounded-xl bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 items-center justify-center place-items-center text-signal">
+                                        <Icon className="w-4 h-4" />
                                     </div>
                                 </motion.a>
                             );
                         })}
                     </div>
+                )}
+
+                {/* Grid view */}
+                {view === "grid" && (
+                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                        {filtered.map((project, index) => {
+                            const shot = `https://image.thum.io/get/maxage/365/width/800/noanimate/${project.href}`;
+                            return (
+                                <motion.a
+                                    key={project.slug}
+                                    href={`/work/${project.slug}`}
+                                    onClick={(e) => goDetail(e, project.slug)}
+                                    initial={{ opacity: 0, y: 24 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: Math.min(index, 8) * 0.05, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                                    className="group overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-smoke hover:border-signal/50 hover:-translate-y-1 hover:shadow-2xl hover:shadow-signal/10 transition-all duration-500"
+                                >
+                                    <div className="relative aspect-[16/10] overflow-hidden bg-smoke">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-signal/25 via-signal/10 to-transparent" />
+                                        <img
+                                            src={shot}
+                                            alt={`Screenshot of ${project.title}`}
+                                            loading="lazy"
+                                            onError={(e) => (e.currentTarget.style.display = "none")}
+                                            className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                                        <span className="absolute top-3 right-4 font-accent italic text-3xl text-white/50 select-none">
+                                            {String(index + 1).padStart(2, "0")}
+                                        </span>
+                                    </div>
+                                    <div className="p-5">
+                                        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-signal">
+                                            {project.category}
+                                        </p>
+                                        <div className="mt-1.5 flex items-center justify-between gap-3">
+                                            <h3 className="font-display font-semibold text-xl leading-tight">
+                                                {project.title}
+                                            </h3>
+                                            <span className="shrink-0 w-9 h-9 rounded-full border border-black/15 dark:border-white/15 flex items-center justify-center transition-all duration-300 group-hover:bg-signal group-hover:text-white group-hover:border-signal group-hover:rotate-45">
+                                                <ArrowUpRight className="w-4 h-4" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </motion.a>
+                            );
+                        })}
+                    </div>
+                )}
+
+                {/* Empty state */}
+                {filtered.length === 0 && (
+                    <div className="rounded-3xl border border-dashed border-black/15 dark:border-white/15 p-14 text-center">
+                        <p className="font-display font-semibold text-2xl">{t.projects.empty}</p>
+                        <button
+                            onClick={clearFilters}
+                            className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-signal hover:underline underline-offset-4"
+                        >
+                            {t.projects.clear}
+                        </button>
+                    </div>
+                )}
+
+                {/* Floating cursor preview (desktop index view) */}
+                <div className="pointer-events-none fixed left-0 top-0 z-30 hidden lg:block" aria-hidden>
+                    <motion.div style={{ x: pvx, y: pvy }} className="relative w-[320px] aspect-[16/10]">
+                        <AnimatePresence>
+                            {view === "index" && hovered !== null && filtered[hovered] && (
+                                <motion.div
+                                    key={filtered[hovered].slug}
+                                    initial={{ opacity: 0, scale: 0.92 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.25, ease: "easeOut" }}
+                                    className="absolute inset-0 overflow-hidden rounded-2xl border border-white/15 bg-smoke shadow-2xl"
+                                >
+                                    <div className="absolute inset-0 bg-gradient-to-br from-signal/25 via-signal/10 to-transparent" />
+                                    <img
+                                        src={`https://image.thum.io/get/maxage/365/width/800/noanimate/${filtered[hovered].href}`}
+                                        alt=""
+                                        onError={(e) => (e.currentTarget.style.display = "none")}
+                                        className="absolute inset-0 h-full w-full object-cover object-top"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                    <div className="absolute bottom-0 inset-x-0 p-4">
+                                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-signal">
+                                            {filtered[hovered].category}
+                                        </p>
+                                        <p className="font-display font-bold text-xl text-white leading-none mt-1">
+                                            {filtered[hovered].title}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </motion.div>
                 </div>
             </div>
         </section>

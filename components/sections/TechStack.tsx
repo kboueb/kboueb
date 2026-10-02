@@ -5,39 +5,34 @@ import { motion } from "framer-motion";
 const technologies = [
     "React",
     "Next.js",
-    // "Vue.js",
     "Laravel",
-    // "Node.js",
     "TypeScript",
     "Tailwind CSS",
-    // "Sass",
     "WordPress",
     "Drupal",
     "Docker",
     "GitHub",
-    // "Flutter",
-    // "Azure",
+    "PHP",
+    "MySQL",
 ];
 
 export function TechStack() {
     return (
-        <section className="py-10 bg-neutral-50 dark:bg-black overflow-hidden border-y border-black/5 dark:border-white/5">
+        <section className="relative py-14 overflow-hidden border-y border-black/10 dark:border-white/10 bg-bone/60 dark:bg-ink">
             <div className="flex relative">
-                <motion.div
-                    className="flex gap-12 whitespace-nowrap"
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{
-                        repeat: Infinity,
-                        ease: "linear",
-                        duration: 25,
-                    }}
-                >
+                <div className="absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-paper to-transparent dark:from-ink dark:to-transparent pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-paper to-transparent dark:from-ink dark:to-transparent pointer-events-none" />
+
+                <motion.div className="flex gap-12 whitespace-nowrap animate-marquee">
                     {[...technologies, ...technologies].map((tech, index) => (
                         <div
                             key={index}
-                            className="text-2xl md:text-4xl font-bold text-neutral-300 hover:text-gray-900 dark:text-neutral-800 dark:hover:text-white transition-colors cursor-default uppercase tracking-widest"
+                            className="flex items-center gap-3 text-2xl md:text-4xl font-display font-bold uppercase tracking-widest"
                         >
-                            {tech}
+                            <span className="text-neutral-400 dark:text-neutral-600 transition-colors duration-300 hover:text-signal cursor-default">
+                                {tech}
+                            </span>
+                            <span className="text-signal/60 text-xl align-middle">✦</span>
                         </div>
                     ))}
                 </motion.div>

@@ -2,29 +2,60 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ---- KBOUEB design system: B&W base + signal accent ---- */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-ink: #0b0b0c;
+  --color-paper: #f5f3ee;
+  --color-smoke: #131315;
+  --color-bone: #e9e6dd;
+  --color-signal: #ff4d00;
+  --color-mint: #c6f24e;
+  --color-fog: #8e8e93;
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-grotesk);
+  --font-mono: var(--font-jetbrains);
+  --font-accent: var(--font-instrument);
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: var(--color-ink);
+  --foreground: var(--color-paper);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* Scrollbar styling if needed, keeping it minimal */
+.font-display {
+  font-family: var(--font-grotesk), var(--font-inter), sans-serif;
+}
+
+.font-accent {
+  font-family: var(--font-instrument), Georgia, serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-grotesk), var(--font-inter), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Outlined watermark text */
+.text-stroke {
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-signal) 40%, transparent);
+  color: transparent;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -32,13 +63,83 @@ body {
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: var(--color-signal);
   border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }
 
 ::selection {
-  background: rgba(99, 102, 241, 0.3);
+  background: color-mix(in srgb, var(--color-signal) 35%, transparent);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Slow pulse glow */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.06); }
+}
+.animate-glow {
+  animation: glow-pulse 8s ease-in-out infinite;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Blink (terminal cursor) */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Blueprint grid */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(140, 140, 140, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(140, 140, 140, 0.1) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Paper grain */
+.bg-grain {
+  background-image: radial-gradient(rgba(140, 140, 140, 0.09) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
