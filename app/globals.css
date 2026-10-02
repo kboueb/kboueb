@@ -10,7 +10,7 @@
   --color-bone: #e9e6dd;
   --color-signal: #ff4d00;
   --color-mint: #c6f24e;
-  --color-fog: #8e8e93;
+  --color-fog: var(--fog);
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-grotesk);
@@ -26,6 +26,14 @@
 .dark {
   --background: var(--color-ink);
   --foreground: var(--color-paper);
+}
+
+/* Theme-adaptive muted text (keeps ≥4.5:1 contrast in both modes) */
+:root {
+  --fog: #61616a;
+}
+.dark {
+  --fog: #a7a7ae;
 }
 
 body {
@@ -69,6 +77,13 @@ h1, h2, h3 {
 
 ::selection {
   background: color-mix(in srgb, var(--color-signal) 35%, transparent);
+}
+
+/* Visible keyboard focus */
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* Floating animation */

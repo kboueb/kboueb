@@ -7,7 +7,9 @@ import { Menu, X, Command } from "lucide-react";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { CommandPalette } from "@/components/ui/CommandPalette";
-import { useHomeNav } from "@/components/ui/Transition";
+import { useTransitionNav, useHomeNav } from "@/components/ui/Transition";
+import { scrollToTop } from "@/components/ui/SmoothScroll";
+import { usePathname } from "next/navigation";
 
 export function Navbar() {
     const { t } = useLanguage();
@@ -16,6 +18,8 @@ export function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [paletteOpen, setPaletteOpen] = useState(false);
     const { scrollY } = useScroll();
+    const pathname = usePathname();
+    const { navigate } = useTransitionNav();
     const homeNav = useHomeNav();
 
     useMotionValueEvent(scrollY, "change", (latest) => {
@@ -43,17 +47,31 @@ export function Navbar() {
         return () => window.removeEventListener("keydown", onKey);
     }, []);
 
-    const links = [
-        { name: t.nav.work, href: "#projects" },
-        { name: t.nav.about, href: "#about" },
-        { name: t.nav.stack, href: "#skills" },
-        { name: t.nav.contact, href: "#contact" },
-    ];
-
-    const go = (href: string) => {
+    const goRoute = (href: string) => {
         setIsMobileMenuOpen(false);
-        homeNav(href);
+        if (pathname === href) {
+            scrollToTop();
+            return;
+        }
+        navigate(href);
     };
+
+    const goStack = () => {
+        setIsMobileMenuOpen(false);
+        homeNav("#skills");
+    };
+
+    const goHome = () => {
+        setIsMobileMenuOpen(false);
+        homeNav("#hero");
+    };
+
+    const links = [
+        { name: t.nav.work, action: () => goRoute("/work") },
+        { name: t.nav.about, action: () => goRoute("/about") },
+        { name: t.nav.stack, action: goStack },
+        { name: t.nav.contact, action: () => goRoute("/contact") },
+    ];
 
     return (
         <>
@@ -73,7 +91,7 @@ export function Navbar() {
                 <div className="container mx-auto px-6 flex items-center justify-between">
                     {/* Wordmark */}
                     <button
-                        onClick={() => go("#hero")}
+                        onClick={goHome}
                         className="font-display font-bold text-xl tracking-tight text-ink dark:text-paper"
                     >
                         kboueb<span className="text-signal">°</span>
@@ -84,7 +102,7 @@ export function Navbar() {
                         {links.map((link) => (
                             <button
                                 key={link.name}
-                                onClick={() => go(link.href)}
+                                onClick={link.action}
                                 className="group relative overflow-hidden font-mono text-xs uppercase tracking-[0.18em] text-ink/60 dark:text-paper/60 hover:text-ink dark:hover:text-paper transition-colors"
                             >
                                 <span className="block transition-transform duration-300 group-hover:-translate-y-full">
@@ -148,7 +166,7 @@ export function Navbar() {
                                     initial={{ opacity: 0, y: 24 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.08 + i * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                                    onClick={() => go(link.href)}
+                                    onClick={link.action}
                                     className="text-left font-display font-bold text-5xl tracking-tight text-ink dark:text-paper active:text-signal"
                                 >
                                     {link.name}

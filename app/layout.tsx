@@ -4,6 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { TransitionProvider } from "@/components/ui/Transition";
+import { Cursor } from "@/components/ui/Cursor";
+import { ShipEasterEgg } from "@/components/ui/ShipEasterEgg";
+import { Analytics } from "@vercel/analytics/react";
 import { Navbar } from "@/components/layout/Navbar";
 import { FooterSection } from "@/components/layout/FooterSection";
 import { BackToTop } from "@/components/ui/BackToTop";
@@ -54,6 +57,21 @@ export const metadata: Metadata = {
   title: "Kani Bouebassihou — Creative Developer",
   description:
     "Portfolio of Kani Bouebassihou, Technical Lead & full-stack creative developer based in Dakar. 20+ websites and apps shipped for institutions, NGOs and companies.",
+  metadataBase: new URL("https://kboueb.vercel.app"),
+  openGraph: {
+    title: "Kani Bouebassihou — Creative Developer",
+    description:
+      "Technical Lead & full-stack creative developer based in Dakar. 20+ websites and apps shipped for institutions, NGOs and companies.",
+    url: "/",
+    siteName: "kboueb°",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kani Bouebassihou — Creative Developer",
+    description:
+      "Technical Lead & full-stack creative developer based in Dakar. 20+ websites and apps shipped.",
+  },
 };
 
 export default function RootLayout({
@@ -74,11 +92,20 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             <TransitionProvider>
+              <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[80] focus:rounded-full focus:bg-signal focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:text-white"
+              >
+                Skip to content
+              </a>
               <SmoothScroll />
+              <Cursor />
               <Navbar />
               {children}
               <FooterSection />
               <BackToTop />
+              <ShipEasterEgg />
+              <Analytics />
             </TransitionProvider>
           </LanguageProvider>
         </ThemeProvider>

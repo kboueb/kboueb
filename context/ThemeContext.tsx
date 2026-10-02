@@ -22,20 +22,22 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [theme, setThemeState] = useState<Theme>("dark");
+    // Lazy init reads the persisted theme on the client; SSR falls back to
+    // "dark" (matches the anti-flash script default, so nothing flashes).
+    const [theme, setThemeState] = useState<Theme>(() => {
+        if (typeof window === "undefined") return "dark";
+        const stored = window.localStorage.getItem("theme");
+        return stored === "light" || stored === "dark" ? stored : "dark";
+    });
 
+    // Sync the DOM class whenever the theme changes (no state updates here).
     useEffect(() => {
-        const stored = localStorage.getItem("theme");
-        const initial: Theme =
-            stored === "light" || stored === "dark" ? stored : "dark";
-        setThemeState(initial);
-        applyTheme(initial);
-    }, []);
+        applyTheme(theme);
+    }, [theme]);
 
     const setTheme = (next: Theme) => {
         setThemeState(next);
         localStorage.setItem("theme", next);
-        applyTheme(next);
     };
 
     const toggleTheme = () => {

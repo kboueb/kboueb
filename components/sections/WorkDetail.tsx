@@ -27,7 +27,7 @@ export function WorkDetail({ slug }: { slug: string }) {
     };
 
     return (
-        <article className="mx-auto max-w-6xl px-6 md:px-10 pt-32 pb-24 text-ink dark:text-paper">
+        <article id="main-content" className="mx-auto max-w-6xl px-6 md:px-10 pt-32 pb-24 text-ink dark:text-paper">
             {/* Back */}
             <motion.button
                 initial={{ opacity: 0, x: -12 }}

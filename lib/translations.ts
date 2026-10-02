@@ -201,6 +201,12 @@ export const translations = {
                 methods: "Methods",
             },
         },
+        cursor: {
+            view: "View",
+        },
+        easter: {
+            text: "Shipped ✓ — just like your project could be.",
+        },
         footer: {
             tagline: "Design & development crafted in Dakar, Sénégal.",
             hello: "Have an idea worth building?",
@@ -409,6 +415,12 @@ export const translations = {
                 tools: "Outils & Environnements",
                 methods: "Méthodes",
             },
+        },
+        cursor: {
+            view: "Voir",
+        },
+        easter: {
+            text: "Livré ✓ — comme votre projet pourrait l'être.",
         },
         footer: {
             tagline: "Design & développement conçus à Dakar, au Sénégal.",

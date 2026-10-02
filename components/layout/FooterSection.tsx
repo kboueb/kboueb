@@ -4,10 +4,15 @@ import { motion } from "framer-motion";
 import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { scrollToSection, scrollToTop } from "@/components/ui/SmoothScroll";
+import { scrollToTop } from "@/components/ui/SmoothScroll";
+import { useTransitionNav, useHomeNav } from "@/components/ui/Transition";
+import { usePathname } from "next/navigation";
 
 export function FooterSection() {
     const { t } = useLanguage();
+    const pathname = usePathname();
+    const { navigate } = useTransitionNav();
+    const homeNav = useHomeNav();
     const [time, setTime] = useState("");
     const year = new Date().getFullYear();
 
@@ -23,11 +28,19 @@ export function FooterSection() {
         return () => clearInterval(id);
     }, []);
 
+    const goRoute = (href: string) => {
+        if (pathname === href) {
+            scrollToTop();
+            return;
+        }
+        navigate(href);
+    };
+
     const shortcuts = [
-        { name: t.nav.work, href: "#projects" },
-        { name: t.nav.about, href: "#about" },
-        { name: t.nav.stack, href: "#skills" },
-        { name: t.nav.contact, href: "#contact" },
+        { name: t.nav.work, action: () => goRoute("/work") },
+        { name: t.nav.about, action: () => goRoute("/about") },
+        { name: t.nav.stack, action: () => homeNav("#skills") },
+        { name: t.nav.contact, action: () => goRoute("/contact") },
     ];
 
     return (
@@ -50,7 +63,7 @@ export function FooterSection() {
                             {shortcuts.map((s) => (
                                 <button
                                     key={s.name}
-                                    onClick={() => scrollToSection(s.href)}
+                                    onClick={s.action}
                                     className="text-left font-mono text-xs uppercase tracking-[0.18em] text-ink/60 dark:text-paper/60 hover:text-signal transition-colors"
                                 >
                                     {s.name}

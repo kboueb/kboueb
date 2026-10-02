@@ -200,6 +200,7 @@ export function ProjectsSection() {
                                     transition={{ delay: Math.min(index, 8) * 0.04, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                                     onMouseEnter={() => setHovered(index)}
                                     onFocus={() => setHovered(index)}
+                                    data-cursor="view"
                                     className="group relative flex items-center gap-5 md:gap-8 py-5 md:py-6 border-b border-black/10 dark:border-white/10 cursor-pointer"
                                 >
                                     {/* Hover wash */}
@@ -263,6 +264,7 @@ export function ProjectsSection() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: Math.min(index, 8) * 0.05, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                                    data-cursor="view"
                                     className="group overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-smoke hover:border-signal/50 hover:-translate-y-1 hover:shadow-2xl hover:shadow-signal/10 transition-all duration-500"
                                 >
                                     <div className="relative aspect-[16/10] overflow-hidden bg-smoke">

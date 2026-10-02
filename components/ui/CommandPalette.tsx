@@ -16,7 +16,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useTheme } from "@/context/ThemeContext";
-import { scrollToSection } from "@/components/ui/SmoothScroll";
+import { useTransitionNav, useHomeNav } from "@/components/ui/Transition";
 
 type CommandPaletteProps = {
     open: boolean;
@@ -26,6 +26,8 @@ type CommandPaletteProps = {
 export function CommandPalette({ open, onClose }: CommandPaletteProps) {
     const { t, language, setLanguage } = useLanguage();
     const { theme, toggleTheme } = useTheme();
+    const { navigate } = useTransitionNav();
+    const homeNav = useHomeNav();
     const [query, setQuery] = useState("");
     const [selected, setSelected] = useState(0);
     const [copied, setCopied] = useState(false);
@@ -40,10 +42,10 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
 
     const items = useMemo(
         () => [
-            { group: t.palette.navigation, label: t.nav.work, icon: ArrowUpRight, run: () => scrollToSection("#projects") },
-            { group: t.palette.navigation, label: t.nav.about, icon: ArrowUpRight, run: () => scrollToSection("#about") },
-            { group: t.palette.navigation, label: t.nav.stack, icon: ArrowUpRight, run: () => scrollToSection("#skills") },
-            { group: t.palette.navigation, label: t.nav.contact, icon: ArrowUpRight, run: () => scrollToSection("#contact") },
+            { group: t.palette.navigation, label: t.nav.work, icon: ArrowUpRight, run: () => navigate("/work") },
+            { group: t.palette.navigation, label: t.nav.about, icon: ArrowUpRight, run: () => navigate("/about") },
+            { group: t.palette.navigation, label: t.nav.stack, icon: ArrowUpRight, run: () => homeNav("#skills") },
+            { group: t.palette.navigation, label: t.nav.contact, icon: ArrowUpRight, run: () => navigate("/contact") },
             {
                 group: t.palette.actions,
                 label: t.palette.theme,
@@ -84,7 +86,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                 run: () => window.open("https://www.linkedin.com/in/kani-bouebassihou-543b87180/", "_blank"),
             },
         ],
-        [t, theme, language, toggleTheme, setLanguage, copied]
+        [t, theme, language, toggleTheme, setLanguage, copied, navigate, homeNav]
     );
 
     const filtered = useMemo(() => {
