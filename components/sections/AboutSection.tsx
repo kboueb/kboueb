@@ -100,17 +100,17 @@ export function AboutSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.25 }}
-                            className="grid grid-cols-3 gap-4 mt-12"
+                            className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-12"
                         >
                             {stats.map((s) => (
                                 <div
                                     key={s.label}
-                                    className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-smoke p-5 text-center"
+                                    className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-smoke p-4 sm:p-5 flex sm:block items-baseline gap-3 sm:gap-0 sm:text-center"
                                 >
-                                    <div className="font-display font-bold text-3xl md:text-4xl text-signal">
+                                    <div className="font-display font-bold text-3xl md:text-4xl text-signal shrink-0">
                                         {s.value}
                                     </div>
-                                    <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-fog mt-1">
+                                    <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-fog sm:mt-1">
                                         {s.label}
                                     </div>
                                 </div>
