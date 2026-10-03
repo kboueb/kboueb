@@ -166,27 +166,27 @@ export function AboutSection() {
                                     {/* Hover fill */}
                                     <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-signal/[0.07] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                    <div className="flex items-start gap-6">
-                                        <span className="mt-1 font-mono text-sm text-signal tabular-nums">
-                                            {String(index + 1).padStart(2, "0")}
-                                        </span>
-                                        <div className="flex-1">
-                                            <h4 className="font-display font-semibold text-xl md:text-2xl leading-snug group-hover:text-signal transition-colors duration-300">
-                                                {exp.role}
-                                            </h4>
-                                            <p className="mt-1.5 text-sm text-ink/70 dark:text-paper/70">
-                                                <span className="text-signal font-medium">{exp.company}</span>
-                                                <span className="text-fog"> — {exp.location}</span>
-                                            </p>
-                                            {exp.desc && (
-                                                <p className="mt-3 max-h-0 overflow-hidden opacity-0 transition-all duration-500 group-hover:max-h-24 group-hover:opacity-100 text-sm text-fog">
-                                                    {exp.desc}
-                                                </p>
-                                            )}
+                                    <div>
+                                        <div className="flex items-center justify-between gap-4">
+                                            <span className="font-mono text-sm text-signal tabular-nums">
+                                                {String(index + 1).padStart(2, "0")}
+                                            </span>
+                                            <span className="font-mono text-[11px] md:text-xs text-fog tabular-nums text-right">
+                                                {exp.period}
+                                            </span>
                                         </div>
-                                        <span className="shrink-0 font-mono text-xs text-fog pt-1 tabular-nums">
-                                            {exp.period}
-                                        </span>
+                                        <h4 className="mt-2 font-display font-semibold text-xl md:text-2xl leading-snug group-hover:text-signal transition-colors duration-300">
+                                            {exp.role}
+                                        </h4>
+                                        <p className="mt-1.5 text-sm text-ink/70 dark:text-paper/70">
+                                            <span className="text-signal font-medium">{exp.company}</span>
+                                            <span className="text-fog"> — {exp.location}</span>
+                                        </p>
+                                        {exp.desc && (
+                                            <p className="mt-3 overflow-hidden transition-all duration-500 text-sm text-fog max-h-0 opacity-0 max-lg:max-h-none max-lg:opacity-100 lg:group-hover:max-h-24 lg:group-hover:opacity-100">
+                                                {exp.desc}
+                                            </p>
+                                        )}
                                     </div>
                                 </motion.div>
                             ))}
