@@ -219,7 +219,7 @@ export const translations = {
     fr: {
         hero: {
             kicker: "Disponible pour nouveaux projets — Dakar, partout dans le monde",
-            h1: ["Je crée des sites", "web qui font", "leurs preuves."],
+            h1: ["Je crée", "des sites web", "qui font leurs preuves."],
             sub: "Je suis Kani Bouebassihou, Technical Lead & développeur full-stack. Depuis 5 ans, je livre plus de 20 sites et apps pour institutions, ONG et entreprises en Afrique de l'Ouest — rapides, accessibles et conçus pour convertir.",
             ctaProject: "Voir mes projets",
             ctaContact: "Démarrer un projet",

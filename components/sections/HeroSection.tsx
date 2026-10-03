@@ -94,16 +94,6 @@ export function HeroSection() {
             >
                 {/* Left: headline system */}
                 <div>
-                    <motion.div variants={fadeVar} custom={0} initial="hidden" animate="show">
-                        <span className="inline-flex items-center gap-2.5 rounded-full border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/5 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink/70 dark:text-paper/70">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint opacity-75" />
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-mint" />
-                            </span>
-                            {t.hero.kicker}
-                        </span>
-                    </motion.div>
-
                     <h1 className="mt-7 font-display font-bold tracking-tight leading-[0.95] text-[clamp(3rem,8.5vw,6.75rem)]">
                         {t.hero.h1.map((line, i) => (
                             <span key={line} className="block overflow-hidden pb-1 -mb-1">
@@ -122,7 +112,7 @@ export function HeroSection() {
 
                     <motion.p
                         variants={fadeVar}
-                        custom={1}
+                        custom={0}
                         initial="hidden"
                         animate="show"
                         className="mt-7 max-w-xl text-lg leading-relaxed text-ink/70 dark:text-paper/70"
@@ -132,7 +122,7 @@ export function HeroSection() {
 
                     <motion.div
                         variants={fadeVar}
-                        custom={2}
+                        custom={1}
                         initial="hidden"
                         animate="show"
                         className="mt-9 flex flex-wrap items-center gap-4"
@@ -157,7 +147,7 @@ export function HeroSection() {
 
                     <motion.div
                         variants={fadeVar}
-                        custom={3}
+                        custom={2}
                         initial="hidden"
                         animate="show"
                         className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-black/10 dark:border-white/10 pt-6"

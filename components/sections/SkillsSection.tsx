@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import {
     Code2,
     Database,
@@ -12,6 +12,17 @@ import {
     ArrowUpRight,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+
+// Shared scroll-reveal language (same as About / Projects / Contact)
+const gridContainer: Variants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.08 } },
+};
+
+const cardItem: Variants = {
+    hidden: { opacity: 0, y: 24 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
 
 export function SkillsSection() {
     const { t } = useLanguage();
@@ -99,17 +110,19 @@ export function SkillsSection() {
                     </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(150px,auto)]">
+                <motion.div
+                    variants={gridContainer}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(150px,auto)]">
                     {categories.map((cat, index) => {
                         const Icon = cat.icon;
                         const roman = ["I", "II", "III", "IV", "V", "VI", "VII"][index];
                         return (
                             <motion.div
                                 key={cat.id}
-                                initial={{ opacity: 0, y: 24 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                                variants={cardItem}
                                 className={`group relative ${cat.span} p-6 rounded-3xl overflow-hidden border border-black/10 dark:border-white/10 bg-white/70 dark:bg-smoke hover:border-signal/50 hover:-translate-y-1 hover:shadow-2xl hover:shadow-signal/10 transition-all duration-500`}
                             >
                                 {/* Hover wash */}
@@ -147,7 +160,7 @@ export function SkillsSection() {
                             </motion.div>
                         );
                     })}
-                </div>
+                </motion.div>
             </div>
         </section>
     );

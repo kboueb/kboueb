@@ -187,7 +187,6 @@ export function ProjectsSection() {
                 {view === "index" && (
                     <div onMouseMove={onListMove} onMouseLeave={() => setHovered(null)}>
                         {filtered.map((project, index) => {
-                            const Icon = project.icon;
                             const isActive = index === hovered;
                             return (
                                 <motion.a
@@ -240,10 +239,6 @@ export function ProjectsSection() {
                                     <span className="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-black/15 dark:border-white/15 flex items-center justify-center text-ink dark:text-paper transition-all duration-300 group-hover:bg-signal group-hover:text-white group-hover:border-signal group-hover:rotate-45">
                                         <ArrowUpRight className="w-4 h-4" />
                                     </span>
-
-                                    <div className="hidden md:block w-9 h-9 rounded-xl bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 items-center justify-center place-items-center text-signal">
-                                        <Icon className="w-4 h-4" />
-                                    </div>
                                 </motion.a>
                             );
                         })}
